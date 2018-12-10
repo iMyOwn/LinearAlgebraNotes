@@ -1,0 +1,415 @@
+---
+title: "Introduction to Linear Algebra -- 第六章(4)：复数与对称矩阵"
+author: "bourneli"
+date: "2016年8月"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 共轭复数相关性质
+
+**定义1：共轭复数**  $\lambda= a + i b$与$\bar{\lambda}= a - i b$互为共轭复数。
+
+**例1** 共轭复数例子
+
+令$a=1+i,b=1-i$，
+
+有$\bar{ab}={(1+i)(1-i)}=2$
+
+$\bar{a}\bar{b}=(1-i)(1+i)=2$
+
+
+**性质1：复数共轭乘法** $\bar{ab}=\bar{a}\bar{b}$。
+
+证明：
+
+令$a=a_1+ia_2,b=b_1 + ib_2$
+
+可得$ab = a_1b_1-a_2b_2 +i(a_2b_1+a_1b_2)$
+
+取共轭复数，$\bar{ab} = a_1b_1-a_2b_2 -i(a_2b_1+a_1b_2)$
+
+同理，有$\bar{a}\bar{b}=(a_1-ia_2)(b_1-ib_2)=a_1b_1-a_2b_2-i(a_2b_1+a_1b_2)$.
+
+所以$\bar{ab}=\bar{a}\bar{b}$
+
+证毕！
+
+**性质2：向量共轭乘法** $\bar{ax} = \bar{a}\bar{x}$,利用性质1，逐个元素证明，这里省略。
+
+**性质3：矩阵共轭乘法** $\bar{Ax}=\bar{A}\bar{x}$，利用性质2，逐个向量证明，这里省略。
+
+**性质4：实数共轭相等** $\lambda \in R \Leftrightarrow \bar{\lambda} = \lambda$
+
+
+## 特殊矩阵的特征值
+
+特征值非常容易产生复数，因为本质上特征值是求解一个一元多项式的根。但是，有一类矩阵的特征值全是实数，还有一类矩阵的特征值全是虚数，大多数矩阵是介于这两类之间，也就是特征值由复数组成。在实数矩阵中，如果特征值出现复数，那么一定是共轭复数对，由**性质3**可以轻易证明($Ax=\lambda x \Rightarrow \bar{Ax}=\bar{\lambda x} \Rightarrow \bar{A}\bar{x}=A\bar{x}=\bar{\lambda}\bar{x}$)。
+
+
+**例2** 实对称矩阵特征值与特征向量
+
+$$
+  A = \begin{bmatrix}1&3 \\ 3&1\end{bmatrix}
+$$
+
+$\lambda_1=4,\lambda_2=-2$,$x_1=\begin{bmatrix}1&1\end{bmatrix}^T,x_2=\begin{bmatrix}1&-1\end{bmatrix}^T$。特征值为实数，特征向量正交。
+
+
+**性质5：实对称矩阵特征值全为实数** 
+
+
+证明：
+
+对任意特征向量$x$与特征值$\lambda$，$Ax=\lambda x$。
+
+根据性质2，有
+
+$$
+  \bar{Ax}=\bar{A}\bar{x}=\bar{\lambda x} \Rightarrow A\bar{x}=\bar{\lambda}\bar{x} \quad (1)
+$$
+
+将(1)转置，然后右乘$x$得
+
+$$
+  (A\bar{x})^Tx=\bar{\lambda}\bar{x}^Tx \Rightarrow
+  \bar{x}^TA^Tx=\bar{x}^TAx=\bar{x}^T\lambda x =\bar{\lambda}\bar{x}^Tx \quad (2)
+$$
+
+将(2)化简得
+
+$$
+  (\lambda-\bar{\lambda})\bar{x}^Tx = 0
+$$
+
+由特征向量性质$x \ne 0$，令$x_j=a_j+ib_j$，所以$\bar{x}^Tx = \sum_{j=1}^{n}(a_j^2+b_j^2) > 0$，所以$\lambda=\bar{\lambda}$，根据**性质4**，特征值为实数。
+
+证毕！
+
+接下来，将实对称矩阵推广**复数**范围，此时的“对称”矩阵称之为“埃尔米特矩阵”。
+
+
+**定义2：埃尔米特矩阵**
+
+$$
+  A^H=\bar{A}^T=\bar{A^T}=A
+$$
+
+其实在复数范围，除了对称，添加了共轭操作。
+
+**定义3：复向量内积** 若$x,y \in C^n$,那么$x \bullet y = \bar{x}^Ty=x^Hy$，这样定义可以保证$x \bullet x \ge 0$，同时兼容实数域向量点积。
+
+**例3** 复空间向量内积
+
+$x=\begin{bmatrix}1-i \\ 1+2i\end{bmatrix},y=\begin{bmatrix}i \\ i\end{bmatrix}$
+
+$x \bullet y = x^Hy=\begin{bmatrix}1+i && 1-2i\end{bmatrix}\begin{bmatrix}i \\ i\end{bmatrix}=1+2i$
+
+$y \bullet x = \begin{bmatrix}-i && -i\end{bmatrix}\begin{bmatrix}1-i \\ 1+2i\end{bmatrix}=1-2i$
+
+交换后，得到的结果不一致，但是共轭。
+
+**性质6：埃尔米特矩阵的特征值全为实数**
+
+实对称矩阵是埃尔米特矩阵的特例，埃尔米特矩阵是实对称矩阵在复数域的推广。
+
+证明：
+
+
+对任意特征向量$x$与特征值$\lambda$，$Ax=\lambda x$。
+
+根据性质2，有
+
+$$
+  \bar{Ax}=\bar{A}\bar{x}=\bar{\lambda}\bar{x} \quad (1)
+$$
+
+将(1)转置，然后右乘$x$得
+
+$$
+  (\bar{A}\bar{x})^Tx=(\bar{\lambda}\bar{x})^Tx \Rightarrow
+  x^H A^H x = x^H Ax = x^H \lambda x = \bar{\lambda} x^H x \quad (2)
+$$
+
+将(2)化简得
+
+$$
+  (\lambda-\bar{\lambda})x^Hx = 0
+$$
+
+由特征向量性质$x \ne 0$，所以$x^Hx > 0$，所以$\lambda=\bar{\lambda}$。
+
+
+证毕！
+
+上面的证明可以直接套用到实对称矩阵的证明。
+
+
+除了埃尔米特矩阵，还有一种称为反埃尔米特矩阵，对应的实数版本是反对称矩阵，他的特征值有着与埃尔米特矩阵截然不同的性质。
+
+
+**定义4：反埃尔米特矩阵**
+
+反埃尔米特矩阵是反对称矩阵在复数域上的推广，定义
+
+$$
+  A^H=-A
+$$
+
+
+**性质7：反埃尔米特矩阵的特征值全为虚数**
+
+*补个例子*
+
+证明：
+
+方法大致相同，关键步骤如下
+
+$$
+  -\bar{x}^TA^Hx=-\bar{\lambda}\bar{x}^Tx
+  \Rightarrow \bar{x}^TAx=-\bar{\lambda}\bar{x}^Tx
+  \Rightarrow \bar{x}^T{\lambda}x=-\bar{\lambda}\bar{x}^Tx
+$$
+
+得到$\lambda+\bar{\lambda}=0$，所以$\lambda$为纯虚数。
+
+证毕！
+
+
+
+**性质8：实对称矩阵特征向量正交**
+
+证明：
+
+设$x,y$是实对称矩阵A的两个特征向量,特征向量分别为$\lambda,\beta$，分为两种情况考虑
+
+
+**当$\lambda \ne \beta$时**
+
+$$
+  \lambda x \bullet y=Ax \bullet y = (Ax)^Ty=x^TA^Ty=x^TAy=x^T\beta y
+$$
+
+即
+
+$$
+  (\lambda-\beta)x^Ty=0
+$$
+
+因为$\lambda \ne \beta$,所以$x^Ty=0$。
+
+**当$\lambda = \beta$时**
+
+将其扩展到更为一般形式，即**多重特征值**，无论A是否对称，他们的特征向量不一定**需要正交**，但是我们可以通过Gram-Schmidt方法将其特征值正交化，使得矩阵最终可以被标准正交矩阵对角化。假设$\lambda$的特征向量为$x_1,\cdots,x_m$，且经过Gram-Schmidt方法后，得到对应正交向量$q_1,\cdots,q_m$，那么对任意正交化特征向量，有$q_i=\sum_{i=1}^ma_ix_i, a_i \in R$（基与线性空间的性质）。根据特征向量定义,
+
+$$
+  Aq_i = A\sum_{i=1}^ma_ix_i = \sum_{i=1}^ma_iAx_i 
+       = \sum_{i=1}^ma_i\lambda x_i =\lambda \sum_{i=1}^ma_ix_i  
+       = \lambda q_i
+$$
+
+所以$q_i$是A特征向量。
+
+
+证毕！
+
+
+**性质9：埃尔米特矩阵特征向量正交**
+
+证明：
+
+证明方法类似性质8，
+
+$$
+  Ax\bullet y = (Ax)^Hy =x^HA^Hy= x^HAy=\beta x^Hy \\
+  Ax\bullet y = (\lambda x)^Hy = \bar{\lambda} x^Hy \\
+  \Rightarrow (\beta-\bar{\lambda})x^Hy = 0
+$$
+
+
+需要根据$\beta与\bar{\lambda}$的关系，分别证明。
+
+当$\beta \ne \bar{\lambda}$时，$x$与$y$正交易得。
+
+当$\beta = \bar{\lambda}$,由于埃尔米特矩阵，特征值全部为实数，所以此时为多重特征值。证明方法类似**性质8**,使用Gram-Schmidt方法扩展为正交基，这里省略。
+
+
+证毕！
+
+
+**性质10：实对称矩阵必可对角化**
+
+证明：
+
+使用数学归纳法证明。当维度为1时，必成立。假设实对称矩阵$B_{(n-1) \times (n-1)}$矩阵必可以对角化。对于矩阵$A_{n \times n}$，假设一个特征值为$\lambda_1$，其特征向量为$x_1$，使用Gram-Schmidt方法，扩展$x_1$，得到$R^n$下的一组标准正交基,$X = \begin{bmatrix}x_1 & x_2 & \cdots & x_n \end{bmatrix}$，那么可以构建出如下的矩阵
+
+$$
+  A\begin{bmatrix}x_1 & x_2 & \cdots & x_n\end{bmatrix}
+  = \begin{bmatrix}x_1 & x_2 & \cdots & x_n\end{bmatrix} 
+    \begin{bmatrix}
+      \lambda_1 & b_{12} & \cdots & b_{1n} \\
+      0         & b_{22} & \cdots & b_{2n} \\
+      \vdots    & \vdots & \ddots & \vdots \\
+      0         & b_{n2} & \cdots & b_{nn}
+    \end{bmatrix}
+  = X
+    \begin{bmatrix}\lambda_1  & b^T \\ 
+                    0 & B_{(n-1) \times (n-1)}
+     \end{bmatrix} \\
+  \Rightarrow 
+  X^TAX = \begin{bmatrix}\lambda_1  & b^T \\ 
+                    0 & B_{(n-1) \times (n-1)}
+     \end{bmatrix} \qquad (1)
+$$
+
+对(1)转置，
+
+$$
+  X^TA^TX = X^TAX = \begin{bmatrix}\lambda_1  & 0 \\ 
+                    b & B^T_{(n-1) \times (n-1)}
+     \end{bmatrix} \qquad (2)
+$$
+
+(1)与(2)等价，所以$\vec{b}=\vec{0}$，并且$B_{(n-1) \times (n-1)}= B^T_{(n-1) \times (n-1)}$,即B是对称矩阵.根据假设，B可对角化,$B=S^T_B {\Lambda}_B S_B$,代入(2)。  
+
+$$
+  X^TAX = \begin{bmatrix}
+            \lambda_1  & 0 \\ 
+            0 & S^T_B {\Lambda}_B S_B
+          \end{bmatrix} 
+        = \begin{bmatrix}
+            \lambda_1  & 0 \\ 0 & S^T_B
+          \end{bmatrix}
+          \begin{bmatrix}
+            \lambda_1  & 0 \\ 
+            0 & S^T_B {\Lambda}_B S_B
+          \end{bmatrix}
+          \begin{bmatrix}
+            \lambda_1 & 0 \\ 0 & S_B
+          \end{bmatrix}
+          \qquad (4)
+$$
+
+将(4)左边的X代入到右边，
+
+$$
+  A = X
+      \begin{bmatrix}
+            \lambda_1  & 0 \\ 0 & S^T_B
+      \end{bmatrix}
+      \begin{bmatrix}
+        \lambda_1  & 0 \\ 
+        0 & S^T_B {\Lambda}_B S_B
+      \end{bmatrix}
+      \begin{bmatrix}
+        \lambda_1 & 0 \\ 0 & S_B
+      \end{bmatrix}
+      X^T  \qquad(5)
+$$
+
+令$S_A=\begin{bmatrix}
+        \lambda_1 & 0 \\ 0 & S_B
+      \end{bmatrix}X^T$，
+$\Lambda_A = \begin{bmatrix}
+        \lambda_1  & 0 \\ 
+        0 & S^T_B {\Lambda}_B S_B
+      \end{bmatrix}$
+很容易得到$S_A$也是正交矩阵,$\Lambda_A$是对称矩阵。代入(5),得到$A=S_A^T\Lambda_AS_A$。
+      
+
+
+
+证毕！
+
+**定义5 酉矩阵**
+
+标准正交矩阵在复数空间上的推广，用U表示，
+
+$$
+  U^HU=I，即U^{-1}=U
+$$
+
+**性质11：埃尔米特矩阵可对角化** 
+
+
+证明：
+
+Gram-Schmidt方法适用于复向量空间，得到的结果是酉矩阵，证明方法与**性质10**类似，只是将转置符号缓存伴随符号$H$。
+
+证毕！
+
+**性质12：反埃尔米特矩阵可对角化**
+
+证明：
+
+证明方法类似**性质10**，下面只列出关键不同的地方，
+
+$$
+  Ax=X
+    \begin{bmatrix}
+      \lambda_1 & b^H \\
+      0 & B_{n-1}
+    \end{bmatrix} \\
+  \Rightarrow X^HAX = \begin{bmatrix}
+      \lambda_1 & b^H \\
+      0 & B_{n-1}
+    \end{bmatrix} \\
+  \Rightarrow X^HA^HX=X^H(-A)X = \begin{bmatrix}
+      \lambda_1 & b^H \\
+      0 & B_{n-1}
+    \end{bmatrix} \\
+   \Rightarrow X^HAX = \begin{bmatrix}
+      -\lambda_1 & 0 \\
+      -b & -B_{n-1}
+    \end{bmatrix} \\
+    \Rightarrow X^HAX = \begin{bmatrix}
+      0 & 0 \\
+      0 & S_B^H \Lambda_B S_B
+    \end{bmatrix}
+$$
+
+
+证毕！
+
+
+## 总结
+
+* 对称矩阵复空间推广是埃尔米特矩阵$A^H=A$
+* 反对称矩阵复空间推广是反埃尔米特矩阵$A^H=-A$
+* 标准正交矩阵复空间推广是酉矩阵$U^HU=I$
+* 向量点积复空间推广$<x,y>=x^Hy$
+* 埃尔米特矩阵(包括实对称矩阵)，反埃尔米特矩阵(包括反实对称矩阵)可对角化，即特征向量充足
+* 埃尔米特矩阵(包括实对称矩阵)全为实数
+* 反埃尔米特矩阵(包括反实对称矩阵)特征值全部为虚数
+
+
+练习题
+
+教材341页，30~32题
+
+
+**练习1** 实对称矩阵A，假设$\lambda_{max}$是最大特征值，证明$a_11\le \lambda_{max}$。
+
+$$
+  A = \sum_{i}^n \lambda_i q_i q_i^T
+$$
+
+$$
+  a_{11} = \sum_{i}^n \lambda_i q_{i1}^2 \le \lambda_{max} \sum_{i}^n q_{i1}^2 = \lambda_{max}
+$$
+
+**练习2** 反实对称矩阵A($=-A^T$)，证明$det(A) \ge 0$？
+
+当n为偶数,所有特征值为共轭虚数，成对出现，特征值等于特征值的积，必须大于等于0.
+
+当n为奇数，$det(A) = (-1)^ndet(A) = -det(A), det(A) = 0$
+
+**练习3** A是实对称矩阵，且所有特征值为2，那么A是什么？
+
+$$
+  A = Q\Lambda Q^T = Q2IQ^T = 2I 
+$$
+
