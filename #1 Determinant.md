@@ -65,7 +65,8 @@ Date: "2018年12月"
   - 改变了基的“左右手法则”
 
 
-[引申资料]: https://www.matongxue.com/madocs/247.html
+
+[引申资料]： https://www.matongxue.com/madocs/247.html
 
 
 
@@ -73,8 +74,7 @@ Date: "2018年12月"
 
 即所谓的，二阶行列式是面积，三阶行列式是体积。
 
-
-[引申资料]: https://www.cnblogs.com/AndyJee/p/3491487.html
+[引申资料]：  https://www.cnblogs.com/AndyJee/p/3491487.html
 
 
 
